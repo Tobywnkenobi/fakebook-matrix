@@ -12,7 +12,7 @@ function App(): JSX.Element {
         <Heading />
         <Routes>
           <Route path='/' element={<MatrixPage />}/>
-          <Route path='/register' element={<FormPage />}/>t
+          <Route path='/register' element={<FormPage />}/>
           <Route path='*' element={<Navigate to='/' />}/>
         </Routes>
       </BrowserRouter>
