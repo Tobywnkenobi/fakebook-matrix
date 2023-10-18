@@ -1,4 +1,5 @@
 import { useRef, FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 type User = {
   username: string
@@ -10,14 +11,15 @@ type User = {
 
 export default function RegisterForm() {
   
+  const navigate = useNavigate()
+
   const usernameField = useRef<HTMLInputElement>(null)
   const passwordField = useRef<HTMLInputElement>(null)
   const emailField = useRef<HTMLInputElement>(null)
   const fNameField = useRef<HTMLInputElement>(null)
   const lNameField = useRef<HTMLInputElement>(null)
   
-  async function handleRegisterData(e:FormEvent<H){
-    e.preventDefault()
+  async function handleRegisterData(e: FormEvent<HTMLElement>){
     e.preventDefault()
     const user: User = {
       username: usernameField.current!.value,
@@ -30,6 +32,7 @@ export default function RegisterForm() {
     if (lNameField.current!.value) {
       user.last_name = lNameField.current?.value
     }
+    clearFormData()
     await registerUser(user)
   }
 
@@ -39,12 +42,20 @@ export default function RegisterForm() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)
     })
-    if(!res.ok){ 
-      window.alert('Register Failed')
-    }
     const data = await res.json()
     console.log(data)
-  }  
+    if(!res.ok){ 
+      window.alert('Register Failed')
+    } else navigate('/')
+  }
+  
+  function clearFormData(){
+    usernameField.current!.value = ''
+    emailField.current!.value = ''
+    passwordField.current!.value = ''
+    fNameField.current!.value = ''
+    lNameField.current!.value = ''
+  }
 
   return (
     <form onSubmit={handleRegisterData}>
