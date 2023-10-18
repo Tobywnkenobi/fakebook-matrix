@@ -5,6 +5,8 @@ import Whiteboard from "../components/Whiteboard";
 
 export default function MatrixPage() {
 
+  console.log(localStorage.getItem('token'), 'from landing page')
+
   const students = [
     'tim',
     'porter',
@@ -23,8 +25,8 @@ export default function MatrixPage() {
   return (
     <Body sidebar>
       <Instructors />
-      <Students studentArray={students} foo={'bar'}/>
-      <Whiteboard students={students}/>
+      <Students studentArray={students} />
+      <Whiteboard students={students} />
     </Body>
   )
 }

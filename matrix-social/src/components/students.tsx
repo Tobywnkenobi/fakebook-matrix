@@ -1,6 +1,5 @@
-export default function Students(props: { studentArray:Array<string>, foo:string } ) {
-  console.table(props)
-  console.log(props.foo)
+export default function Students(props: { studentArray:Array<string> } ) {
+  
   return (
     <>
       <h4>Students: </h4>

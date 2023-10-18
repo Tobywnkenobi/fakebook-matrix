@@ -1,11 +1,13 @@
-import { useRef, FormEvent, useEffect } from 'react'
+import { useRef, FormEvent, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { User } from '../../types'
+import { UserContext } from '../../contexts/UserProvider'
 
 export default function LoginForm() {
   const navigate = useNavigate()
-
+  const {user, setUser} = useContext(UserContext)
+  console.log(user, 'from login page ===============')
   const usernameField = useRef<HTMLInputElement>(null)
   const emailField = useRef<HTMLInputElement>(null)
   const passwordField = useRef<HTMLInputElement>(null)
@@ -43,6 +45,10 @@ export default function LoginForm() {
     if(res.ok){
       const data = await res.json()
       const accessToken = data.access_token
+      setUser({
+        token: accessToken, 
+        username: loginInfo.username ? loginInfo.username : ''
+    })
       localStorage.setItem('token', accessToken)
     } else window.alert('Failed Login')
   }
